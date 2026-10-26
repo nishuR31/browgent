@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# Agentic headless browser launcher - no Electron, pure Playwright
+export SESSION_BROWSER_HEADLESS=1
+export SESSION_BROWSER_FORCE_NO_GPU=1
+
+# Launch the MCP server which controls the browser
+exec node dist/agent-browser/mcp.js
+
+# Usage:
+#   browgent --headless --port=9222
+#   browgent --port=9222
+#   browgent-mcp
+#
+# Tools (27 MCP): browser_launch, browser_close, browser_new_session, browser_close_session,
+#   browser_new_page, browser_close_page, browser_navigate, browser_click, browser_fill,
+#   browser_press, browser_evaluate, browser_screenshot, browser_dom, browser_back,
+#   browser_forward, browser_reload, browser_wait_for_selector, browser_list_pages,
+#   browser_list_sessions, browser_get_url, browser_get_title, browser_set_viewport,
+#   browser_upload_file, browser_wait_for_navigation, browser_get_cookies,
+#   browser_clear_cookies, browser_add_script_tag
+#
+# Install: npm install -g browgent
+# Do NOT clone/rebuild locally unless developing.

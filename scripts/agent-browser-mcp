@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# MCP server launcher
+export SESSION_BROWSER_HEADLESS=1
+export SESSION_BROWSER_FORCE_NO_GPU=1
+exec node "$(dirname "$0")/../dist/agent-browser/mcp.js"

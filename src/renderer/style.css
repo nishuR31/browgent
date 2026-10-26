@@ -1,0 +1,130 @@
+* { box-sizing: border-box }
+html, body, #root { margin: 0; width: 100%; height: 100%; background: #f0f2f5; color: #202124; overflow: hidden; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased }
+#root { height: 100% }
+.app { height: 100%; display: flex; flex-direction: column; background: #f0f2f5 }
+
+/* Header / nav */
+.header { height: 44px; display: flex; align-items: center; gap: 8px; padding: 0 12px; background: #f1f3f4; border-bottom: 1px solid #dadce0; flex-shrink: 0; z-index: 100 }
+.brand { display: flex; align-items: center; gap: 8px; font-weight: 700; letter-spacing: -0.4px; white-space: nowrap; color: #3c4043; font-size: 16px }
+.orb { width: 8px; height: 8px; border-radius: 50%; background: linear-gradient(135deg, #9a7cff, #4fe0c1); box-shadow: 0 0 14px #765dff80 }
+
+.island-bar { display: flex; gap: 6px; overflow: auto; flex: 1; -webkit-overflow-scrolling: touch; padding-right: 4px }
+.island-pill { display: flex; align-items: center; gap: 6px; border: 1px solid #dadce0; background: #fff; border-radius: 20px; padding: 2px 10px; cursor: pointer; font-size: 12px; color: #3c4043; transition: all 0.12s; white-space: nowrap; min-height: 28px }
+.island-pill:hover { border-color: #5f6368; background: #f8f9fa }
+.island-pill.active { border-color: #5f6368; background: #e8f0fe; color: #1a73e8; font-weight: 600 }
+.pill-dot { width: 7px; height: 7px; border-radius: 50% }
+.pill-count { font-size: 11px; font-weight: 600; color: #5f6368; margin-right: 4px }
+.pill-close { width: 20px; height: 20px; border-radius: 50%; background: #f1f3f4; color: #5f6368; display: grid; place-items: center; font-size: 14px; line-height: 1; padding: 0; cursor: pointer; margin-left: 4px }
+.pill-close:hover { background: #f13c3d; color: #fff }
+
+.add-island { background: transparent; color: #5f6368; border: 1px dashed #dadce0; border-radius: 20px; padding: 2px 10px; cursor: pointer; font-size: 12px; transition: all 0.12s; white-space: nowrap }
+.add-island:hover { background: #f1f3f4; border-color: #5f6368 }
+
+.header-right { display: flex; align-items: center; gap: 6px }
+.chip { font-size: 11px; letter-spacing: 0.6px; color: #5f6368; white-space: nowrap; text-transform: uppercase }
+.icon-btn { background: #f1f3f4; border: 1px solid #dadce0; color: #5f6368; border-radius: 6px; width: 34px; height: 34px; display: grid; place-items: center; cursor: pointer; font-size: 14px; transition: all 0.1s }
+.icon-btn:hover { background: #e8eaed; border-color: #5f6368 }
+.settings-button { width: auto; padding: 0 10px }
+
+/* Tab strip */
+.tab-strip { height: 32px; display: flex; align-items: center; gap: 2px; padding: 0 10px; background: #f8f9fa; border-bottom: 1px solid #dadce0; overflow: hidden; flex-shrink: 0; z-index: 90 }
+.tab { display: flex; align-items: center; gap: 6px; border: 1px solid transparent; border-bottom-color: #dadce0; background: #fff; border-radius: 4px 4px 0 0; padding: 4px 10px; cursor: pointer; font-size: 13px; color: #3c4043; transition: all 0.12s; white-space: nowrap; position: relative; margin-bottom: -1px }
+.tab:hover { background: #f1f3f4 }
+.tab.active { border-color: #dadce0 #dadce0 #fff; border-bottom: 2px solid #fff; background: #fff; font-weight: 600; color: #202124; margin-bottom: 0 }
+.tab-title { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 220px }
+.tab-close { width: 20px; height: 20px; border-radius: 50%; background: #f1f3f4; color: #5f6368; display: grid; place-items: center; font-size: 13px; line-height: 1; padding: 0; cursor: pointer }
+.tab-close:hover { background: #f13c3d; color: #fff }
+.add-tab { background: transparent; color: #5f6368; border: 1px dashed #dadce0; border-radius: 6px; padding: 4px 8px; cursor: pointer; font-size: 18px; line-height: 1; transition: all 0.12s }
+.add-tab:hover { background: #f1f3f4; border-color: #5f6368 }
+
+/* Toolbar */
+.toolbar { height: 42px; display: flex; align-items: center; gap: 6px; padding: 4px 10px; background: #f1f3f4; border-bottom: 1px solid #dadce0; flex-shrink: 0; z-index: 80 }
+.toolbar button { border: 1px solid transparent; border-radius: 6px; padding: 4px 8px; cursor: pointer; font-size: 13px; color: #5f6368; transition: all 0.1s; display: flex; align-items: center; justify-content: center; min-width: 32px }
+.toolbar button:hover { background: #e8eaed }
+.toolbar button:disabled { opacity: 0.4; cursor: not-allowed }
+.address { height: 32px; display: flex; align-items: center; gap: 6px; flex: 1; background: #fff; border: 1px solid #dadce0; border-radius: 4px; padding: 0 10px; color: #3c4043 }
+.address span { color: #5f6368 }
+.address input { width: 100%; border: 0; outline: 0; background: transparent; color: #202124; font-size: 13px }
+.address input:focus { border-color: #4285f4; box-shadow: 0 0 0 2px rgba(66,133,244,0.2) }
+.address input::placeholder { color: #9aa0a6 }
+
+/* Browser stage - flex layout so panel sits beside webview */
+.browser-stage { flex: 1; position: relative; min-height: 0; overflow: hidden; background: #fff; z-index: 1; display: flex; flex-direction: column; }
+.empty { height: 100%; display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center; padding: 32px }
+.bigOrb { width: 72px; height: 72px; border-radius: 50%; background: linear-gradient(135deg, #9a7cff, #4fe0c1); box-shadow: 0 0 40px #765dff55; margin-bottom: 20px }
+.empty h1 { font-size: 24px; letter-spacing: -0.5px; margin: 0 0 10px; color: #202124 }
+.empty p { font-size: 14px; color: #5f6368; margin: 0 0 20px; line-height: 1.6 }
+.primary { background: linear-gradient(135deg, #5b62ff, #4fe0c1); color: #051018; border: 0; border-radius: 8px; padding: 10px 20px; font-weight: 700; font-size: 14px; cursor: pointer; box-shadow: 0 10px 30px rgba(91,98,255,0.35) }
+.primary:hover { filter: brightness(1.08) }
+.features { display: flex; gap: 12px; justify-content: center; margin-top: 16px; font-size: 12px; color: #5f6368 }
+
+.downloads { position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; align-items: center; z-index: 50; flex-wrap: wrap }
+.download { background: #fff; border: 1px solid #dadce0; color: #202124; border-radius: 8px; padding: 6px 10px; display: flex; align-items: center; gap: 8px; font-size: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.1) }
+.download span { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
+.download small { color: #5f6368; font-size: 11px }
+.download button { background: #1a73e8; color: #fff; border: 0; border-radius: 6px; padding: 4px 9px; font-size: 11px; cursor: pointer }
+.download button:hover { background: #1557b0 }
+
+/* Settings panel */
+.settings-panel { position: fixed; z-index: 200; right: 16px; top: 60px; width: min(440px, calc(100vw - 32px)); padding: 18px; background: #fff; border: 1px solid #dadce0; border-radius: 12px; box-shadow: 0 24px 80px rgba(0,0,0,0.15); color: #202124; max-height: 82vh; overflow: auto }
+.settings-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px }
+.settings-head button { font-size: 20px; color: #5f6368; background: transparent; border: 0; border-radius: 6px; width: 28px; height: 28px; cursor: pointer }
+.settings-head button:hover { background: #f1f3f4 }
+.settings-panel p { font-size: 12px; line-height: 1.55; color: #5f6368; margin: 0 0 12px }
+.settings-section { margin-bottom: 16px }
+.settings-section:last-child { margin-bottom: 0 }
+.privacy-options { display: grid; gap: 8px; margin: 12px 0 }
+.privacy-options button { display: flex; align-items: center; gap: 10px; border: 1px solid #dadce0; background: #fff; color: #202124; border-radius: 10px; padding: 11px 12px; text-align: left; cursor: pointer }
+.privacy-options button strong { font-size: 11px; font-weight: 600; color: #5f6368; margin-left: auto }
+.privacy-options button.chosen { border-color: #4285f4; background: #e8f0fe }
+.privacy-options button:hover { border-color: #9aa0a6 }
+.search-options { display: grid; gap: 6px; margin: 12px 0 }
+.search-options button { display: block; border: 1px solid #dadce0; background: #fff; color: #202124; border-radius: 10px; padding: 11px 12px; text-align: left; cursor: pointer }
+.search-options button.chosen { border-color: #4285f4; background: #e8f0fe }
+.search-options button:hover { border-color: #9aa0a6 }
+.settings-panel .primary { width: 100%; margin-top: 8px }
+.settings-panel .settings-note { border-top: 1px solid #dadce0; padding-top: 10px; margin-top: 12px; font-size: 11.5px; color: #5f6368 }
+.settings-panel .close-btn { margin-top: 12px; padding: 8px 16px; background: #f1f3f4; border: 1px solid #dadce0; border-radius: 6px; color: #3c4043; cursor: pointer }
+.settings-panel .close-btn:hover { background: #e8eaed }
+
+/* Agent panel (side overlay, like Chrome devtools docked right) */
+.agent-panel { position: fixed; z-index: 210; right: 0; top: 44px; bottom: 0; width: min(470px, calc(100vw - 40px)); padding: 16px; background: #fff; border-left: 1px solid #dadce0; box-shadow: -24px 0 80px rgba(0,0,0,0.1); color: #202124; max-height: calc(100vh - 44px); overflow: auto; display: flex; flex-direction: column; gap: 12px; transform: translateX(0); transition: transform 0.25s ease }
+.agent-panel.hidden { transform: translateX(100%) }
+.agent-head { display: flex; align-items: center; justify-content: space-between }
+.agent-head strong { font-size: 15px }
+.agent-head button { font-size: 18px; color: #5f6368; background: transparent; border: 0; border-radius: 6px; width: 26px; height: 26px; cursor: pointer }
+.agent-head button:hover { background: #f1f3f4 }
+.agent-sys { display: grid; grid-template-columns: 1fr 1fr; gap: 8px }
+.sys-row { background: #f1f3f4; border: 1px solid #dadce0; border-radius: 8px; padding: 8px 10px; font-size: 12px; color: #5f6368; display: flex; justify-content: space-between; align-items: center }
+.sys-row span:first-child { color: #9aa0a6; font-size: 11px }
+.agent-group { display: flex; flex-direction: column; gap: 7px }
+.agent-group label { font-size: 11px; letter-spacing: 0.6px; color: #9aa0a6; text-transform: uppercase }
+.agent-inline { display: flex; gap: 6px; align-items: center }
+.agent-inline input { flex: 1; background: #fff; border: 1px solid #dadce0; border-radius: 8px; padding: 7px 10px; color: #202124; font-size: 13px }
+.agent-inline input::placeholder { color: #9aa0a6 }
+.agent-inline input:focus { border-color: #4285f4; outline: none }
+.agent-actions { display: flex; gap: 6px }
+.agent-actions button { flex: 1; border-radius: 8px; padding: 8px 10px; border: 0; color: #fff; font-weight: 600; font-size: 13px; cursor: pointer }
+.agent-actions .primary { background: linear-gradient(135deg, #5b62ff, #4fe0c1) }
+.agent-actions button:not(.primary) { background: #fff; border: 1px solid #dadce0; color: #5f6368 }
+.agent-actions button:not(.primary):hover { background: #f1f3f4 }
+.agent-actions button:disabled { opacity: 0.4; cursor: not-allowed }
+.agent-output { background: #f7f8f9; border: 1px solid #dadce0; border-radius: 8px; padding: 10px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11.5px; line-height: 1.5; color: #5f6368; max-height: 180px; overflow: auto }
+.agent-output div { white-space: pre-wrap; word-break: break-word; margin: 0 0 6px }
+.agent-dom { background: #f7f8f9; border: 1px solid #dadce0; border-radius: 8px; padding: 10px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; color: #5f6368; max-height: 240px; overflow: auto }
+
+@media (max-width: 700px) {
+  .header { padding: 0 6px }
+  .island-bar { gap: 2px }
+  .island-pill { padding: 2px 8px; font-size: 11px }
+  .tab-strip { gap: 1px; padding: 0 6px }
+  .tab { padding: 4px 8px; font-size: 12px }
+  .toolbar { padding: 4px 6px }
+  .agent-panel { width: 100vw; right: 0 }
+}
+
+@media (max-width: 480px) {
+  .tab-title { max-width: 120px }
+  .header-right { gap: 4px }
+  .chip { display: none }
+}

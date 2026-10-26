@@ -1,0 +1,12 @@
+import { chromium } from 'playwright';
+const b = await chromium.launch({ headless: true, args: ['--no-sandbox','--disable-gpu','--disable-software-rasterizer'] });
+const ctx = await b.newContext({ viewport: { width: 1280, height: 720 } });
+const page = await ctx.newPage();
+await page.goto('https://example.com');
+await new Promise(r => setTimeout(r, 1000));
+await page.screenshot({ path: '/home/nishu/Techstack/codes/session-browser/pics/final-1-example.png', fullPage: false });
+await page.goto('https://duckduckgo.com/?q=browgent+agentic+browser+2026');
+await new Promise(r => setTimeout(r, 1500));
+await page.screenshot({ path: '/home/nishu/Techstack/codes/session-browser/pics/final-2-search.png', fullPage: false });
+console.log('screenshots saved');
+await b.close();

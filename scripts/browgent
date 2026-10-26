@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+DEBUG_PORT=""
+HEADLESS=0
+EXTRA_ARGS=()
+
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --headless)
+      HEADLESS=1
+      shift
+      ;;
+    --port=*)
+      DEBUG_PORT="${1#--port=}"
+      shift
+      ;;
+    --port)
+      DEBUG_PORT="${2:-}"
+      shift 2
+      ;;
+    --)
+      shift
+      while [ $# -gt 0 ]; do EXTRA_ARGS+=("$1"); shift; done
+      ;;
+    *)
+      if [ -z "$DEBUG_PORT" ]; then DEBUG_PORT="$1"; else EXTRA_ARGS+=("$1"); fi
+      shift
+      ;;
+  esac
+done
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ELECTRON_BIN="${ELECTRON_BIN:-"$SCRIPT_DIR/../node_modules/.bin/electron"}"
+
+if [ "$HEADLESS" = "1" ]; then
+  export SESSION_BROWSER_HEADLESS=1
+fi
+
+if [ "$HEADLESS" = "1" ]; then
+  export SESSION_BROWSER_HEADLESS=1
+  export SESSION_BROWSER_FORCE_NO_GPU=1
+  EXTRA_ARGS+=(--single-process --no-zygote)
+fi
+
+exec "$ELECTRON_BIN" . \
+  --no-sandbox \
+  --disable-gpu \
+  --disable-software-rasterizer \
+  --disable-gpu-compositing \
+  --disable-setuid-sandbox \
+  --disable-dev-shm-usage \
+  ${DEBUG_PORT:+--remote-debugging-port="$DEBUG_PORT"} \
+  "${EXTRA_ARGS[@]}"

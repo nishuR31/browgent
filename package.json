@@ -1,0 +1,46 @@
+{
+  "name": "browgent",
+  "version": "1.0.0",
+  "description": "Production-ready headless agent browser with Playwright scraping, MCP server, session isolation, full DOM control",
+  "main": "dist/agent-browser/browser.js",
+  "exports": {
+    ".": {
+      "import": "./dist/agent-browser/browser.js",
+      "require": "./dist/agent-browser/browser.cjs"
+    },
+    "./mcp": {
+      "import": "./dist/agent-browser/mcp.js"
+    }
+  },
+  "bin": {
+    "browgent": "scripts/agent-browser",
+    "browgent-mcp": "scripts/agent-browser-mcp"
+  },
+  "scripts": {
+    "install": "bash scripts/auto-install.sh",
+    "build": "tsc src/agent-browser/browser.ts src/agent-browser/mcp.ts src/agent-browser/dual.ts --outDir dist/agent-browser --esModuleInterop --skipLibCheck --module esnext --target esnext --downlevelIteration --declaration false --noEmitOnError false || true",
+    "start": "bash scripts/agent-browser --headless --port=9222",
+    "mcp": "node dist/agent-browser/mcp.js",
+    "test": "bash scripts/package-standalone.sh"
+  },
+  "keywords": [
+    "browser",
+    "agent",
+    "scraping",
+    "mcp",
+    "playwright",
+    "headless",
+    "automation"
+  ],
+  "author": "nishan",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "playwright": "^1.49.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3"
+  }
+}

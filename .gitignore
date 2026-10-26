@@ -1,0 +1,11 @@
+node_modules/
+dist/
+pics/*.png
+pics/*.jpg
+pics/*.gif
+*.log
+nohup.out
+.cache/
+.DS_Store
+*.tmp
+.env
